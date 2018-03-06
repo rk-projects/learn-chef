@@ -14,3 +14,19 @@ template '/var/www/html/index.html' do
   mode '0755'
   action :create
 end
+
+file '/etc/motd' do
+  content 'Welcome to My Server'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+execute 'command-test' do
+  command 'echo blah >> /etc/motd'
+  action :run
+  only_if 'test -r /etc/issue'
+  not_if 'test -r /etc/motd'
+end
+
