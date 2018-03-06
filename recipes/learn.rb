@@ -26,7 +26,6 @@ end
 execute 'command-test' do
   command 'echo blah >> /etc/motd'
   action :run
-  only_if 'test -r /etc/issue'
-  not_if 'test -r /etc/motd'
+  only_if { ::File.exists?('/etc/motd')} # Scope Operator to avoid File in our ruby code.
 end
 
